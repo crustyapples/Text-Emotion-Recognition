@@ -1,0 +1,5 @@
+
+.DS_Store
+*.pyc
+.vector_cache
+.venv

@@ -10,22 +10,21 @@ from dataset import TextEmotionDataset
 with open('tokenizer_pytorch.pkl', 'rb') as file:
     tokenizer = pickle.load(file)
 
-# Define the vocabulary size (needed for the Embedding layer)
-vocab_size = len(tokenizer.word_index) + 1
-
 # Load the processed data
 with open('processed_data_pytorch.pkl', 'rb') as file:
-    X_train_pad, X_test_pad, y_train, y_test, max_seq_length = pickle.load(file)
+    X_train_pad, X_val_pad, X_test_pad, y_train, y_val, y_test, max_seq_length = pickle.load(file)
 
 # Load the label encoder
 with open('label_encoder_pytorch.pkl', 'rb') as file:
     label_encoder = pickle.load(file)
 
-# Create datasets and dataloaders
+# Create datasets and dataloaders for training, validation, and testing
 train_dataset = TextEmotionDataset(X_train_pad, y_train)
+val_dataset = TextEmotionDataset(X_val_pad, y_val)  # Assuming you have a validation dataset
 test_dataset = TextEmotionDataset(X_test_pad, y_test)
 
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False)  # Assuming the same batch size as train_loader
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
 
 # Define the CNN model
@@ -55,24 +54,48 @@ embedding_dim = 100
 n_filters = 100
 filter_sizes = [3, 4, 5]
 
-# Instantiate the model
+# Instantiate the model, loss, and optimizer
 model = CNNModel(vocab_size, output_size, embedding_dim, n_filters, filter_sizes)
-
-# Loss and optimizer
 criterion = nn.CrossEntropyLoss()
 optimizer = Adam(model.parameters(), lr=0.001)
 
-# Function to train the model
-def train_model(model, train_loader, criterion, optimizer, epochs=10):
-    model.train()
+# Function to train the model with early stopping
+def train_model_with_early_stopping(model, train_loader, val_loader, criterion, optimizer, epochs=10, patience=3):
+    best_val_loss = float('inf')
+    patience_counter = 0
+
     for epoch in range(epochs):
+        # Training phase
+        model.train()
         for inputs, labels in train_loader:
             optimizer.zero_grad()
             output = model(inputs)
             loss = criterion(output, labels)
             loss.backward()
             optimizer.step()
-        print(f'Epoch {epoch + 1}/{epochs} - Loss: {loss.item()}')
+
+        # Validation phase
+        val_loss = 0
+        model.eval()
+        with torch.no_grad():
+            for inputs, labels in val_loader:
+                output = model(inputs)
+                loss = criterion(output, labels)
+                val_loss += loss.item()
+        val_loss /= len(val_loader)
+
+        print(f'Epoch {epoch + 1}/{epochs} - Train Loss: {loss.item()} - Val Loss: {val_loss}')
+        
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            torch.save(model.state_dict(), 'saved_models/cnn_model_pytorch.pth')  # Save the best model
+            patience_counter = 0  # Reset patience counter
+        else:
+            patience_counter += 1  # Increase patience counter
+
+        if patience_counter >= patience:
+            print("Early stopping triggered")
+            break
 
 # Function to evaluate the model
 def evaluate_model(model, test_loader):
@@ -87,12 +110,10 @@ def evaluate_model(model, test_loader):
             true_labels.extend(labels.numpy())
     return classification_report(true_labels, all_preds, target_names=label_encoder.classes_)
 
-# Train the model
-train_model(model, train_loader, criterion, optimizer)
+# Train the model with early stopping
+train_model_with_early_stopping(model, train_loader, val_loader, criterion, optimizer)
 
-# Evaluate the model
+# Load the best model and evaluate on the test set
+model.load_state_dict(torch.load('saved_models/cnn_model_pytorch.pth'))
 report = evaluate_model(model, test_loader)
 print(report)
-
-# Save the model
-torch.save(model.state_dict(), 'saved_models/cnn_model_pytorch.pth')
