@@ -3,3 +3,4 @@
 *.pyc
 .vector_cache
 .venv
+emo/
