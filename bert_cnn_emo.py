@@ -16,7 +16,7 @@ df_test = df_test.drop(df_test[df_test['Label']=='others'].index)
 
 label_encoder = LabelEncoder()
 df_train['Label'] = label_encoder.fit_transform(df_train['Label'])
-df_test['Label'] = label_encoder.fit_transform(df_test['Label'])
+df_test['Label'] = label_encoder.transform(df_test['Label'])
 
 class_weights = compute_class_weight(
     class_weight='balanced',
@@ -49,15 +49,22 @@ def encode_text(df, max_len=128):
     
     return input_ids, attention_masks
 
+df_train, df_val = train_test_split(df_train, test_size=0.2, random_state=42)
+
 train_input_ids, train_attention_masks = encode_text(df_train)
+val_input_ids, val_attention_masks = encode_text(df_val)
 test_input_ids, test_attention_masks = encode_text(df_test)
 
+val_labels = df_val['Label'].values
+
 train_ds = tf.data.Dataset.from_tensor_slices(((train_input_ids, train_attention_masks), df_train.Label.values))
+val_ds = tf.data.Dataset.from_tensor_slices(((val_input_ids, val_attention_masks), val_labels))
 test_ds = tf.data.Dataset.from_tensor_slices(((test_input_ids, test_attention_masks), df_test.Label.values))
 
 batch_size = 16
 train_ds = train_ds.shuffle(len(df_train)).batch(batch_size=batch_size, drop_remainder=False)
-test_ds = test_ds.shuffle(len(df_test)).batch(batch_size=batch_size, drop_remainder=False)
+val_ds = val_ds.batch(batch_size=batch_size, drop_remainder=False)
+test_ds = test_ds.batch(batch_size=batch_size, drop_remainder=False)
 
 def CNN_model():
     input_ids = tf.keras.layers.Input(shape=(128,), dtype=tf.int32, name='input_ids') # Assuming a max length of 128
@@ -70,10 +77,8 @@ def CNN_model():
 
     # CNN layers
     network_layer = tf.keras.layers.Conv1D(32, (2), activation='relu')(network_layer)
-    network_layer = tf.keras.layers.Conv1D(64, (2), activation='relu')(network_layer)
     network_layer = tf.keras.layers.GlobalMaxPool1D()(network_layer) 
-    network_layer = tf.keras.layers.Dense(256, activation="relu")(network_layer) 
-    network_layer = tf.keras.layers.Dropout(0.5)(network_layer) 
+    network_layer = tf.keras.layers.Dropout(0.5)(network_layer)
     network_layer = tf.keras.layers.Dense(3, activation="softmax", name='classifier')(network_layer) 
 
     return tf.keras.Model(inputs=[input_ids, attention_mask], outputs=network_layer)
@@ -103,7 +108,7 @@ early_stop = EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=
 
 print(f'Training BERT CNN model...')
 cnn_history = cnn_model.fit(x=train_ds,
-                            validation_data=test_ds,
+                            validation_data=val_ds,
                             epochs=epochs_count,
                             class_weight=class_weight_dict,
                             callbacks=[early_stop])
