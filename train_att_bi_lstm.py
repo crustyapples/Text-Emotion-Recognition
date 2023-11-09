@@ -123,7 +123,7 @@ def train_model_with_early_stopping(model, train_loader, val_loader, criterion, 
         # Early stopping logic
         if val_loss < best_val_loss:
             best_val_loss = val_loss
-            torch.save(model.state_dict(), 'att_bi_lstm_model.pth')  # Save the best model
+            torch.save(model.state_dict(), 'saved_models/att_bi_lstm_model.pth')  # Save the best model
             patience_counter = 0  # Reset patience counter
         else:
             patience_counter += 1  # Increment patience counter
@@ -135,7 +135,7 @@ def train_model_with_early_stopping(model, train_loader, val_loader, criterion, 
 train_model_with_early_stopping(model, train_loader, val_loader, criterion, optimizer, scheduler, epochs=10, grad_clip=5.0, patience=3)
 
 # Load the best model and evaluate on the validation and test sets
-model.load_state_dict(torch.load('enhanced_rnn_model.pth'))
+model.load_state_dict(torch.load('saved_models/att_bi_lstm_model.pth'))
 
 def evaluate_model(model, loader):
     model.eval()

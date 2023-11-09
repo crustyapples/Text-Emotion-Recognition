@@ -23,9 +23,9 @@ train_dataset = TextEmotionDataset(X_train_pad, y_train)
 val_dataset = TextEmotionDataset(X_val_pad, y_val)  # Assuming you have a validation dataset
 test_dataset = TextEmotionDataset(X_test_pad, y_test)
 
-train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
-val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False)  # Assuming the same batch size as train_loader
-test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
+train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
+val_loader = DataLoader(val_dataset, batch_size=16, shuffle=False)  # Assuming the same batch size as train_loader
+test_loader = DataLoader(test_dataset, batch_size=16, shuffle=False)
 
 # Define the CNN model
 class CNNModel(nn.Module):

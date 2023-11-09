@@ -31,9 +31,9 @@ train_dataset = TextEmotionDataset(X_train_pad, y_train)
 val_dataset = TextEmotionDataset(X_val_pad, y_val)
 test_dataset = TextEmotionDataset(X_test_pad, y_test)
 
-train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
-val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False)
-test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
+train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
+val_loader = DataLoader(val_dataset, batch_size=16, shuffle=False)
+test_loader = DataLoader(test_dataset, batch_size=16, shuffle=False)
 
 
 class EnhancedRNNModel(nn.Module):
@@ -102,7 +102,7 @@ def train_model_with_early_stopping(model, train_loader, val_loader, criterion, 
         # Early stopping logic
         if val_loss < best_val_loss:
             best_val_loss = val_loss
-            torch.save(model.state_dict(), 'enhanced_rnn_model.pth')  # Save the best model
+            torch.save(model.state_dict(), 'saved_models/bi_lstm_model.pth')  # Save the best model
             patience_counter = 0  # Reset patience counter
         else:
             patience_counter += 1  # Increment patience counter
@@ -114,7 +114,7 @@ def train_model_with_early_stopping(model, train_loader, val_loader, criterion, 
 train_model_with_early_stopping(model, train_loader, val_loader, criterion, optimizer, scheduler, epochs=10, grad_clip=5.0, patience=3)
 
 # Load the best model and evaluate on the validation and test sets
-model.load_state_dict(torch.load('bi_lstm_model.pth'))
+model.load_state_dict(torch.load('saved_models/bi_lstm_model.pth'))
 
 def evaluate_model(model, loader):
     model.eval()
