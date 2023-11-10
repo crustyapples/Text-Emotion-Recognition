@@ -68,7 +68,7 @@ To view the results of the baseline models, please refer to the `model_compariso
 | Notebook             | Description                                  |
 |----------------------|----------------------------------------------|
 | [BERT + CNN](BERT-CNN/bert_cnn_cf.ipynb)           | Notebook for the combination of BERT and CNN models. |
-| [BERT + CNN](BERT-CNN//bert_cnn_emo.ipynb)           | Notebook for the combination of BERT and CNN models. |
+| [BERT + CNN](BERT-CNN/bert_cnn_emo.ipynb)           | Notebook for the combination of BERT and CNN models. |
 
 
 
