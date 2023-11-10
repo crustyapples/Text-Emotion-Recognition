@@ -10,7 +10,7 @@ import json
 import numpy as np
 
 # Load the CSV file using pandas
-data = pd.read_csv('/Users/advait/Desktop/gitpositories/SC4001-Assignment-2/Text-Emotion-Recognition/text_emotion.csv')
+data = pd.read_csv('tweets_emotions/text_emotion.csv')
 
 # keep only these emotions as there are too few samples of the rest
 
