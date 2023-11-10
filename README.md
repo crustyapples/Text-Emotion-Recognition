@@ -36,7 +36,7 @@ To run the preprocessing scripts, follow these steps:
 
 This section describes the contents of the repository, divided into two main directories: `tweets_emotions` and `emo2019`. Each directory contains notebooks associated with various models.
 
-To view the results of the baseline models, please refer to the model comparison notebooks in each directory. For BERT + CNN models, please refer to the `bert_cnn_cf.ipynb` and `bert_cnn_emo.ipynb` notebooks in the `tweets_emotions` and `emo2019` directories respectively.
+To view the results of the baseline models, please refer to the `model_comparison` notebooks in each directory. For BERT + CNN models, please refer to the `bert_cnn_cf.ipynb` and `bert_cnn_emo.ipynb` notebooks in the `tweets_emotions` and `emo2019` directories respectively.
 
 ### tweets_emotions Directory
 
