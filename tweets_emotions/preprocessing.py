@@ -12,6 +12,10 @@ import numpy as np
 # Load the CSV file using pandas
 data = pd.read_csv('/Users/advait/Desktop/gitpositories/SC4001-Assignment-2/Text-Emotion-Recognition/text_emotion.csv')
 
+# keep only these emotions as there are too few samples of the rest
+
+data = data[data['sentiment'].isin(['worry', 'neutral', 'happiness', 'sadness', 'love'])]
+
 # Encode the sentiment labels
 label_encoder = LabelEncoder()
 data['sentiment'] = label_encoder.fit_transform(data['sentiment'])
@@ -33,8 +37,8 @@ max_seq_length = max([len(x) for x in X_seq])  # Get max sequence length
 X_pad = pad_sequences(X_seq, maxlen=max_seq_length)
 
 # Split the data into training, validation, and test sets
-X_train, X_temp, y_train, y_temp = train_test_split(X_pad, y, test_size=0.2, random_state=42)
-X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X_pad, y, test_size=0.2, random_state=42)
+X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.2, random_state=42)
 
 # Reset indexes
 y_train, y_val, y_test = np.array(y_train), np.array(y_val), np.array(y_test)
