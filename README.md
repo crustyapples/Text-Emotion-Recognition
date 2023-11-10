@@ -59,16 +59,17 @@ To view the results of the baseline models, please refer to the `model_compariso
 
 
 
-## Running BERT-CNN files
-   use the following command in terminal to install extra library required for the files, this libray will rewrite some files use by keras libray which makes some files in previous steps to become unexecutable. (Create new virtual environment if necessary)
-   ```bash
-   pip install tf-models-official
-   
+### Running BERT-CNN files
+
+`pip install tf-models-official` Before running the BERT Models as they require an extra library, this libray may interfere with packages used for the above models. (Create new virtual environment if necessary)
+
+
 ## BERT-CNN Directory
+
 | Notebook             | Description                                  |
 |----------------------|----------------------------------------------|
 | [BERT + CNN](BERT-CNN/bert_cnn_cf.ipynb)           | Notebook for the combination of BERT and CNN models. |
-| [BERT + CNN](BERT-CNN/bert_cnn_emo.ipynb)           | Notebook for the combination of BERT and CNN models. |
+| [BERT + CNN](BERT-CNN//bert_cnn_emo.ipynb)           | Notebook for the combination of BERT and CNN models. |
 
 
 
