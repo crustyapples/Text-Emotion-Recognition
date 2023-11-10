@@ -32,5 +32,29 @@ To run the preprocessing scripts, follow these steps:
    python tweets_emotions/preprocessing.py
    python emo2019/preprocessing.py
 
-## Notebooks
+## Repository Contents
+
+This section describes the contents of the repository, divided into two main directories: `tweets_emotions` and `emo2019`. Each directory contains notebooks associated with various models.
+
+To view the results of the baseline models, please refer to the model comparison notebooks in each directory. For BERT + CNN models, please refer to the `bert_cnn_cf.ipynb` and `bert_cnn_emo.ipynb` notebooks in the `tweets_emotions` and `emo2019` directories respectively.
+
+### tweets_emotions Directory
+
+| Notebook             | Description                                  |
+|----------------------|----------------------------------------------|
+| CNN(tweets_emotions/cnn_te.ipynb)                  | Notebook for the Convolutional Neural Network model. |
+| BiLSTM(tweets_emotions/bi_lstm_te.ipynb)               | Notebook for the Bidirectional Long Short-Term Memory model. |
+| AttBiLSTM(tweets_emotions/att_bi_lstm_te.ipynb)            | Notebook for the Attention-based Bidirectional LSTM model. |
+| BERT + CNN(tweets_emotions/bert_cnn_cf.ipynb)           | Notebook for the combination of BERT and CNN models. |
+| Model Comparison(tweets_emotions/model_comparison.ipynb)     | Notebook for comparing the performance of the different models. |
+
+### emo2019 Directory
+
+| Notebook             | Description                                  |
+|----------------------|----------------------------------------------|
+| CNN(tweets_emotions/cnn_emo.ipynb)                  | Notebook for the Convolutional Neural Network model. |
+| BiLSTM(tweets_emotions/bi_lstm_emo.ipynb)               | Notebook for the Bidirectional Long Short-Term Memory model. |
+| AttBiLSTM(tweets_emotions/att_bi_lstm_emo.ipynb)            | Notebook for the Attention-based Bidirectional LSTM model. |
+| BERT + CNN(tweets_emotions/bert_cnn_emo.ipynb)           | Notebook for the combination of BERT and CNN models. |
+| Model Comparison(tweets_emotions/model_comparison.ipynb)     | Notebook for comparing the performance of the different models. |
 
