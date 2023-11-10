@@ -29,8 +29,19 @@ To run the preprocessing scripts, follow these steps:
 1. **Run the Script:** Run the following command in your terminal:
 
    ```bash
-   python tweets_emotions/preprocessing.py
-   python emo2019/preprocessing.py
+   python Baseline/tweets_emotions/preprocessing.py
+   python Baseline/emo2019/preprocessing.py
 
 ## Notebooks
+
+
+
+## Running BERT-CNN files
+   use the following command in terminal to install extra library required for the files, this libray will rewrite some files use by keras libray which makes some files in previous steps to become unexecutable. (Create new virtual environment if necessary)
+   ```bash
+   pip install tf-models-official
+
+   
+
+
 
