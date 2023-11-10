@@ -64,7 +64,7 @@ To view the results of the baseline models, please refer to the `model_compariso
    ```bash
    pip install tf-models-official
    
-### BERT-CNN Directory
+## BERT-CNN Directory
 | Notebook             | Description                                  |
 |----------------------|----------------------------------------------|
 | [BERT + CNN](BERT-CNN/bert_cnn_cf.ipynb)           | Notebook for the combination of BERT and CNN models. |
