@@ -52,10 +52,10 @@ To view the results of the baseline models, please refer to the `model_compariso
 
 | Notebook             | Description                                  |
 |----------------------|----------------------------------------------|
-| [CNN](Baseline/tweets_emotions/cnn_emo.ipynb)                  | Notebook for the Convolutional Neural Network model. |
-| [BiLSTM](Baseline/tweets_emotions/bi_lstm_emo.ipynb)               | Notebook for the Bidirectional Long Short-Term Memory model. |
-| [AttBiLSTM](Baseline/tweets_emotions/att_bi_lstm_emo.ipynb)            | Notebook for the Attention-based Bidirectional LSTM model. |
-| [Model Comparison](Baseline/tweets_emotions/model_comparison.ipynb)     | Notebook for comparing the performance of the different models. |
+| [CNN](Baseline/emo2019/cnn_emo.ipynb)                  | Notebook for the Convolutional Neural Network model. |
+| [BiLSTM](Baseline/emo2019/bi_lstm_emo.ipynb)               | Notebook for the Bidirectional Long Short-Term Memory model. |
+| [AttBiLSTM](Baseline/emo2019/att_bi_lstm_emo.ipynb)            | Notebook for the Attention-based Bidirectional LSTM model. |
+| [Model Comparison](Baseline/emo2019/model_comparison.ipynb)     | Notebook for comparing the performance of the different models. |
 
 
 
@@ -68,7 +68,7 @@ To view the results of the baseline models, please refer to the `model_compariso
 | Notebook             | Description                                  |
 |----------------------|----------------------------------------------|
 | [BERT + CNN](BERT-CNN/bert_cnn_cf.ipynb)           | Notebook for the combination of BERT and CNN models. |
-| [BERT + CNN](Baseline//bert_cnn_emo.ipynb)           | Notebook for the combination of BERT and CNN models. |
+| [BERT + CNN](BERT-CNN//bert_cnn_emo.ipynb)           | Notebook for the combination of BERT and CNN models. |
 
 
 
